@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><?php echo $this->pageTitle; ?></title>
+        <base href="<?php echo $this->getSkinUrl(); ?>" />
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/styles.min.css" type="text/css">
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <a href="<?php echo $this->getBaseUrl(); ?>" class="header-logo">
+                    <img src="images/logo.svg" alt="Magento Commerce" width="205" height="60">
+                </a>
+            </div>
+            <div class="content">
+                <?php require_once $contentTemplate; ?>
+            </div>
+        </div>
+        <div class="footer">
+            <p class="footer-copyright">Magento is a trademark of Magento Inc. Copyright &copy; 2016 Magento Inc.</p>
+        </div>
+    </body>
+</html>

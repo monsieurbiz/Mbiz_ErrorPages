@@ -1,0 +1,630 @@
+//
+// Forms
+// --------------------------------------------------------------------------
+
+
+// Variables
+// --------------------------------------------------------------------------
+
+@input-bg:                        #fff;
+@input-bg-disabled:               @color-gray-lighter;
+@input-color:                     @color-gray;
+@input-border:                    #ccc;
+@input-border-focus:              #66afe9;
+@input-color-placeholder:         #999;
+@input-height:                    32px;
+
+@form-group-margin-bottom:        15px;
+
+@legend-color:                    @color-gray-dark;
+@legend-border-color:             #e5e5e5;
+
+@input-group-addon-bg:            @color-gray-lighter;
+@input-group-addon-border-color:  @input-border;
+
+@cursor-disabled:                 not-allowed;
+
+
+// Mixins
+// --------------------------------------------------------------------------
+
+.form-control-focus(@color: @input-border-focus) {
+    @color-rgba: rgba(red(@color), green(@color), blue(@color), .6);
+
+    &:focus {
+        border-color: @color;
+        outline: 0;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px @color-rgba;
+    }
+}
+
+.form-control-validation(@text-color: #555; @border-color: #ccc; @background-color: #f5f5f5) {
+    color: @text-color;
+    border-color: @border-color;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075); // Redeclare so transitions work
+
+    &:focus {
+        border-color: darken(@border-color, 10%);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten(@border-color, 20%);
+    }
+}
+
+
+// Normalize
+// --------------------------------------------------------------------------
+
+fieldset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    // Chrome and Firefox set a `min-width min-content` on fieldsets, so we
+    // reset that to ensure it behaves more like a standard block element.
+    min-width: 0;
+}
+
+legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 10px;
+    font-size: (@font-size-base * 1.5);
+    line-height: inherit;
+    color: @legend-color;
+    border: 0;
+    border-bottom: 1px solid @legend-border-color;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%; // Force IE8 to wrap long content
+    margin-bottom: 5px;
+    font-weight: normal;
+
+    a:not(.btn) {
+        text-decoration: underline;
+    }
+}
+
+// Override content-box in Normalize (* isn't specific enough)
+input[type="search"] {
+    box-sizing: border-box;
+}
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+    margin: 4px 0 0;
+    margin-top: 1px \9; // IE8-9
+    line-height: normal;
+}
+
+// Set the height of file controls to match text inputs
+input[type="file"] {
+    display: block;
+}
+
+// Make range inputs behave like textual form controls
+input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+// Set cursor for select to highlight the action
+select {
+    cursor: pointer;
+}
+
+// Make multiple select elements height not fixed
+select[multiple],
+select[size] {
+    height: auto;
+}
+
+// Focus for file, radio, and checkbox
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+    .tab-focus();
+}
+
+// Adjust output element
+output {
+    display: block;
+    padding-top: 7px;
+    font-size: @font-size-base;
+    line-height: @line-height-base;
+    color: @input-color;
+}
+
+
+// Label
+//
+// Default label styles
+// --------------------------------------------------------------------------
+
+label,
+.label {
+    font-family: @font-family-serif;
+    font-size: (@font-size-base - .1rem);
+    font-style: italic;
+
+    em {
+        font-style: normal;
+        color: @color-primary;
+    }
+}
+
+.label {
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+
+// Common form controls
+//
+// Shared size and type resets for form controls. Apply `.form-control` to
+// any of the following form controls:
+//
+// select
+// textarea
+// input[type="text"]
+// input[type="password"]
+// input[type="datetime"]
+// input[type="datetime-local"]
+// input[type="date"]
+// input[type="month"]
+// input[type="time"]
+// input[type="week"]
+// input[type="number"]
+// input[type="email"]
+// input[type="url"]
+// input[type="search"]
+// input[type="tel"]
+// input[type="color"]
+// --------------------------------------------------------------------------
+
+.form-control,
+.input-text,
+.select,
+select {
+    display: block;
+    width: 100%;
+    height: @input-height; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+    padding: @padding-base-vertical @padding-base-horizontal;
+    font-size: @font-size-base;
+    line-height: 1;
+    color: @input-color;
+    background-color: @input-bg;
+    background-image: none; // Reset unusual Firefox-on-Android default style see https://github.com/necolas/normalize.css/issues/214
+    border: 1px solid @input-border;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+
+    // Customize the `:focus` state to imitate native WebKit styles.
+    .form-control-focus();
+
+    // Placeholder
+    .placeholder();
+
+    // Disabled and read-only inputs
+    //
+    // HTML5 says that controls under a fieldset > legend:first-child won't
+    // be disabled if the fieldset is disabled. Due to implementation
+    // difficulty, we don't honor that edge case we style them as disabled
+    // anyway.
+    &[disabled],
+    &[readonly],
+    fieldset[disabled] & {
+        background-color: @input-bg-disabled;
+        opacity: 1; // iOS fix for unreadable disabled content
+    }
+
+    &[disabled],
+    fieldset[disabled] & {
+        cursor: @cursor-disabled;
+    }
+
+    // Reset height for `textarea`s
+    textarea& {
+        height: auto;
+    }
+
+    &.validation-failed {
+        .form-control-validation(@state-error-text, @state-error-text, @state-error-bg);
+    }
+
+    &.inline {
+        display: inline;
+        width: auto;
+    }
+}
+
+// Search inputs in iOS
+//
+// This overrides the extra rounded corners on search inputs in iOS so that
+// our `.form-control` class can properly style them. Note that this cannot
+// simply be added to `.form-control` as it's not specific enough.
+// --------------------------------------------------------------------------
+
+input[type="search"] {
+    -webkit-appearance: none;
+}
+
+
+// Special styles for iOS temporal inputs
+//
+// In Mobile Safari, setting `display block` on temporal inputs causes the
+// text within the input to become vertically misaligned. As a workaround,
+// we set a pixel line-height that matches the given height of the input,
+// but only for Safari. See https://bugs.webkit.org/show_bug.cgi?id=139848
+// --------------------------------------------------------------------------
+
+@media screen and (-webkit-min-device-pixel-ratio 0) {
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="month"] {
+        line-height: @input-height;
+    }
+}
+
+
+// Form groups
+//
+// Designed to help with the organization and spacing of vertical forms. For
+// horizontal forms, use the predefined grid classes.
+// --------------------------------------------------------------------------
+
+.form-group {
+    margin-bottom: @form-group-margin-bottom;
+}
+
+
+// Submit
+// --------------------------------------------------------------------------
+
+.form-submit {
+    margin: 20px 0 0;
+}
+
+
+// Required
+// --------------------------------------------------------------------------
+
+.form-required {
+    display: block;
+    padding: 30px 0 0;
+    font-size: 1.2rem;
+    color: lighten(@color-gray-light, 20%);
+
+    em {
+        color: @color-primary;
+    }
+}
+
+
+// Checkboxes and radios
+//
+// Indent the labels to position radios/checkboxes as hanging controls.
+// --------------------------------------------------------------------------
+
+.radio,
+.checkbox {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    label {
+        min-height: @line-height-computed; // Ensure the input doesn't jump when there is no text
+        padding-left: 20px;
+        margin-bottom: 0;
+        font-weight: normal;
+        cursor: pointer;
+    }
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 4px \9; // IE8-9
+}
+
+.radio + .radio,
+.checkbox + .checkbox {
+    margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
+}
+
+// Radios and checkboxes on same line
+.radio-inline,
+.checkbox-inline {
+    position: relative;
+    display: inline-block;
+    padding-left: 20px;
+    margin-bottom: 0;
+    vertical-align: middle;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+    margin-top: 0;
+    margin-left: 10px; // space out consecutive inline controls
+}
+
+// Apply same disabled cursor tweak as for inputs
+// Some special care is needed because <label>s don't inherit their parent's `cursor`.
+//
+// Note Neither radios nor checkboxes can be readonly.
+input[type="radio"],
+input[type="checkbox"] {
+    &[disabled],
+    &.disabled,
+    fieldset[disabled] & {
+        cursor: @cursor-disabled;
+
+        & + span {
+            color: @color-gray-light;
+            cursor: @cursor-disabled;
+        }
+    }
+}
+
+// These classes are used directly on <label>s
+.radio-inline,
+.checkbox-inline {
+    &.disabled,
+    fieldset[disabled] & {
+        cursor: @cursor-disabled;
+    }
+}
+
+// These classes are used on elements with <label> descendants
+.radio,
+.checkbox {
+    &.disabled,
+    fieldset[disabled] & {
+        label {
+            cursor: @cursor-disabled;
+        }
+    }
+}
+
+
+// Help text
+//
+// Apply to any element you wish to create light text for placement immediately
+// below a form control. Use for general help, formatting, or instructional text.
+
+.form-help {
+    display: block; // account for any element using help-block
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: @font-size-small;
+    font-style: italic;
+    color: lighten(@text-color, 25%); // lighten the text some for contrast
+
+    a {
+        color: @color-gray-light;
+
+        &:hover,
+        &:focus {
+            color: @text-color;
+        }
+    }
+}
+
+
+// Inline forms
+//
+// Make forms appear inline(-block) by adding the `.form-inline` class.
+// Inline forms begin stacked on extra small (mobile) devices and then go
+// inline when viewports reach <768px.
+//
+// Requires wrapping inputs and labels with `.form-group` for proper display
+// of default HTML form controls.
+// --------------------------------------------------------------------------
+
+.form-inline {
+    @media (min-width: @screen-sm-min) {
+        // Inline-block all the things for "inline"
+        .form-group {
+            display: inline-block;
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        // In navbar-form, allow folks to *not* use `.form-group`
+        .form-control {
+            display: inline-block;
+            width: auto; // Prevent labels from stacking above inputs in `.form-group`
+            vertical-align: middle;
+        }
+
+        // Make static controls behave like regular ones
+        .form-control-static {
+            display: inline-block;
+        }
+
+        .input-group {
+            display: inline-table;
+            vertical-align: middle;
+
+            .input-group-addon,
+            .input-group-btn,
+            .form-control {
+                width: auto;
+            }
+        }
+
+        // Input groups need that 100% width though
+        .input-group > .form-control {
+            width: 100%;
+        }
+
+        .control-label {
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        // Remove default margin on radios/checkboxes that were used for stacking, and
+        // then undo the floating of radios and checkboxes to match
+        .radio,
+        .checkbox {
+            display: inline-block;
+            margin-top: 0;
+            margin-bottom: 0;
+            vertical-align: middle;
+
+            label {
+                padding-left: 0;
+            }
+        }
+
+        .radio input[type="radio"],
+        .checkbox input[type="checkbox"] {
+            position: relative;
+            margin-left: 0;
+        }
+    }
+}
+
+
+// Validation text
+// --------------------------------------------------------------------------
+
+.validation-advice {
+    position: relative;
+    padding: 5px;
+    font-size: 1.2rem;
+    color: @state-error-text;
+    background-color: @state-error-bg;
+}
+
+
+// Input groups
+// --------------------------------------------------------------------------
+
+.input-group {
+    position: relative; // For dropdowns
+    display: table;
+    border-collapse: separate; // prevent input groups from inheriting border styles from table cells when placed within a table
+
+    .form-control {
+        // Ensure that the input is always above the *appended* addon button for
+        // proper border colors.
+        position: relative;
+        z-index: 2;
+
+        // IE9 fubars the placeholder attribute in text inputs and the arrows on
+        // select elements in input groups. To fix it, we float the input.
+        float: left;
+
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+// Display as table-cell
+.input-group-addon,
+.input-group-btn,
+.input-group .form-control {
+    display: table-cell;
+}
+
+// Addon and addon wrapper for buttons
+.input-group-addon,
+.input-group-btn {
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle; // Match the inputs
+}
+
+// Text input groups
+.input-group-addon {
+    padding: @padding-base-vertical @padding-base-horizontal;
+    font-size: @font-size-base;
+    font-weight: normal;
+    line-height: 1;
+    color: @input-color;
+    text-align: center;
+    background-color: @input-group-addon-bg;
+    border: 1px solid @input-group-addon-border-color;
+
+    // Nuke default margins from checkboxes and radios to vertically center within.
+    input[type="radio"],
+    input[type="checkbox"] {
+        margin-top: 0;
+    }
+}
+
+// Reset rounded corners
+.input-group .form-control:first-child,
+.input-group-addon:first-child,
+.input-group-btn:first-child > .btn,
+.input-group-btn:first-child > .btn-group > .btn,
+.input-group-btn:first-child > .dropdown-toggle,
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+    .border-right-radius(0);
+}
+
+.input-group-addon:first-child {
+    border-right: 0;
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child > .btn,
+.input-group-btn:last-child > .btn-group > .btn,
+.input-group-btn:last-child > .dropdown-toggle,
+.input-group-btn:first-child > .btn:not(:first-child),
+.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+    .border-left-radius(0);
+}
+
+.input-group-addon:last-child {
+    border-left: 0;
+}
+
+// Button input groups
+.input-group-btn {
+    position: relative;
+    // Jankily prevent input button groups from wrapping with `white-space` and
+    // `font-size` in combination with `inline-block` on buttons.
+    font-size: 0;
+    white-space: nowrap;
+
+    // Negative margin for spacing, position for bringing hovered/focused/actived
+    // element above the siblings.
+    > .btn {
+        position: relative;
+        height: @input-height;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 1.4rem;
+        z-index: 2;
+
+        + .btn {
+            margin-left: -1px;
+        }
+    }
+
+    // Negative margin to only have a 1px border between the two
+    &:first-child {
+        > .btn,
+        > .btn-group {
+            margin-right: -1px;
+        }
+    }
+
+    &:last-child {
+        > .btn,
+        > .btn-group {
+            margin-left: -1px;
+        }
+    }
+}

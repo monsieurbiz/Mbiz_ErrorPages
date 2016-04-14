@@ -1,0 +1,68 @@
+//
+// Core
+// --------------------------------------------------------------------------
+
+
+// Box model
+// --------------------------------------------------------------------------
+
+* {
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+// Body reset
+// --------------------------------------------------------------------------
+
+html, body {
+    min-height: 100%;
+}
+
+html {
+    height: 100%;
+    font-size: 62.5%;
+    // IE9-IE11 math fixing. See http://bit.ly/1g4X0bX
+    font-size: calc(1em * 0.625);
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+body {
+    position: relative;
+    font-family: @font-family-base;
+    font-size: @font-size-base - .1rem;
+    line-height: @line-height-base;
+    color: @text-color;
+    background-color: @body-bg;
+
+    @media (min-width: @screen-md-min) {
+        font-size: @font-size-base;
+    }
+}
+
+
+// Reset fonts for relevant elements
+// --------------------------------------------------------------------------
+
+input,
+button,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+
+// Responsive images
+// --------------------------------------------------------------------------
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}

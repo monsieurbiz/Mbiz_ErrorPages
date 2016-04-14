@@ -1,0 +1,78 @@
+//
+// Messages
+// --------------------------------------------------------------------------
+
+
+// Variables
+// --------------------------------------------------------------------------
+
+@messages-link-font-weight: bold;
+
+
+// Mixins
+// --------------------------------------------------------------------------
+
+.messages-variant(@background, @border, @text-color) {
+    background-color: @background;
+    border-color: @border;
+    color: @text-color;
+    padding: @padding-base-vertical @padding-base-horizontal;
+
+    a {
+        color: darken(@text-color, 10%);
+    }
+}
+
+
+// Base styles
+// --------------------------------------------------------------------------
+
+.messages {
+    .list-unstyled();
+
+    > li,
+    > div {
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        border-width: 1px;
+        border-style: solid;
+
+        ul {
+            .list-unstyled();
+        }
+
+        li {
+            margin: 0 0 5px;
+
+            &:last-child {
+                margin: 0;
+            }
+        }
+
+        // Provide class for links that match messagess
+        a {
+            font-weight: @messages-link-font-weight;
+        }
+    }
+}
+
+
+// Alternate styles
+// --------------------------------------------------------------------------
+
+.success-msg {
+    .messages-variant(@state-success-bg, @state-success-border, @state-success-text);
+}
+
+.info-msg {
+    .messages-variant(@state-info-bg, @state-info-border, @state-info-text);
+}
+
+.warning-msg {
+    .messages-variant(@state-warning-bg, @state-warning-border, @state-warning-text);
+}
+
+.error-msg {
+    .messages-variant(@state-error-bg, @state-error-border, @state-error-text);
+}

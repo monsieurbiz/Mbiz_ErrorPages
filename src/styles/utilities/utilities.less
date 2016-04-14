@@ -1,0 +1,197 @@
+//
+// Utility classes
+// --------------------------------------------------------------------------
+
+
+// Mixins
+// --------------------------------------------------------------------------
+
+// http://nicolasgallagher.com/micro-clearfix-hack/
+.clearfix() {
+    &::before,
+    &::after {
+        content: " ";
+        display: table;
+    }
+    &::after {
+        clear: both;
+    }
+}
+
+// https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+.text-hide() {
+    font: ~"0/0" a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+
+// Reset text styles (except font-size)
+.reset-text() {
+    font-family: @font-family-base;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-break: auto;
+    line-height: @line-height-base;
+    text-align: left; // Fallback for where `start` is not supported
+    text-align: start;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    white-space: normal;
+    word-break: normal;
+    word-spacing: normal;
+    word-wrap: normal;
+}
+
+// http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+.sr-only() {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+// WebKit-style focus
+.tab-focus() {
+    // Default
+    outline: thin dotted;
+    // WebKit
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+// Opacity with filter for IE8
+.opacity(@opacity) {
+    opacity: @opacity;
+    // IE8 filter
+    @opacity-ie: (@opacity * 100);
+    filter: ~"alpha(opacity=@{opacity-ie})";
+}
+
+// Center vertically and horizontally something
+.middle() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// Border radius
+.border-top-radius(@radius) {
+    border-top-right-radius: @radius;
+    border-top-left-radius: @radius;
+}
+
+.border-right-radius(@radius) {
+    border-bottom-right-radius: @radius;
+    border-top-right-radius: @radius;
+}
+
+.border-bottom-radius(@radius) {
+    border-bottom-right-radius: @radius;
+    border-bottom-left-radius: @radius;
+}
+
+.border-left-radius(@radius) {
+    border-bottom-left-radius: @radius;
+    border-top-left-radius: @radius;
+}
+
+// Opacity with IE fallback
+.opacity(@opacity) {
+    opacity: @opacity;
+    // IE8 filter
+    @opacity-ie: (@opacity * 100);
+    filter: ~"alpha(opacity=@{opacity-ie})";
+}
+
+// Placeholder vendor prefixes
+.placeholder(@color: @input-color-placeholder) {
+    // Firefox
+    &::-moz-placeholder {
+        color: @color;
+        opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+    }
+    // Internet Explorer 10+
+    &:-ms-input-placeholder {
+        color: @color;
+    }
+    // Safari and Chrome
+    &::-webkit-input-placeholder {
+        color: @color;
+    }
+}
+
+
+// Floats
+// --------------------------------------------------------------------------
+
+.clearfix {
+    .clearfix();
+}
+
+
+// Alignment
+// --------------------------------------------------------------------------
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+// Toggling content
+// --------------------------------------------------------------------------
+
+.hide {
+    display: none !important;
+}
+
+.show {
+    display: block !important;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.text-hide {
+    .text-hide();
+}
+
+// Hide from screenreaders and browsers
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+// Magento
+.no-display {
+    display: none !important;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+
+// Makes an element visually hidden, but accessible
+// --------------------------------------------------------------------------
+
+.sr-only {
+    .sr-only();
+}
