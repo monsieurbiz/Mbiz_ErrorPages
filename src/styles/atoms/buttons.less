@@ -1,0 +1,238 @@
+//
+// Buttons
+// --------------------------------------------------------------------------
+
+
+// Variables
+// --------------------------------------------------------------------------
+
+@btn-font-size:            1.4rem;
+@btn-font-weight:          normal;
+@btn-text-transform:       uppercase;
+
+@btn-padding-vertical:     @padding-base-vertical + 2px;
+@btn-padding-horizontal:   @padding-base-horizontal + 18px;
+
+@btn-default-color:        #fff;
+@btn-default-bg:           @color-primary;
+
+@btn-success-color:        #fff;
+@btn-success-bg:           @color-success;
+
+@btn-info-color:           #fff;
+@btn-info-bg:              @color-info;
+
+@btn-warning-color:        #fff;
+@btn-warning-bg:           @color-warning;
+
+@btn-error-color:          #fff;
+@btn-error-bg:             @color-error;
+
+@btn-ghost-color:          #fff;
+@btn-ghost-bg:             #fff;
+
+@btn-link-disabled-color:  @color-gray-light;
+
+
+// Mixins
+// --------------------------------------------------------------------------
+
+.button-variant(@color, @background, @ghost: false) {
+    color: @color;
+    background-color: @background;
+
+    &:active,
+    &.active {
+        background-image: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        color: @color;
+        background-color: darken(@background, 5%);
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            background-color: @background;
+        }
+    }
+
+    & when (lightness(@background) < 20%) {
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            background-color: lighten(@background, 20%);
+        }
+    }
+
+    & when (@ghost = true) {
+        background-color: fade(@background, 30%);
+        border: 2px solid @background;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            background-color: fade(@background, 30%);
+        }
+    }
+}
+
+.button-size(@padding-vertical, @padding-horizontal, @font-size, @line-height) {
+    padding: @padding-vertical @padding-horizontal;
+    font-size: @font-size;
+    line-height: @line-height;
+}
+
+
+// Base styles
+// --------------------------------------------------------------------------
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0; // For input
+    font-weight: @btn-font-weight;
+    text-transform: @btn-text-transform;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none; // Reset unusual Firefox-on-Android default style see https://github.com/necolas/normalize.css/issues/214
+    border: none;
+    .button-size(@btn-padding-vertical, @btn-padding-horizontal, @btn-font-size, @line-height-base);
+    user-select: none;
+    transition: background-color .15s ease-in-out;
+
+    &,
+    &:active,
+    &.active {
+        &:focus,
+        &.focus {
+            .tab-focus();
+        }
+    }
+
+    &:hover,
+    &:focus {
+        color: @btn-default-color;
+        text-decoration: none;
+    }
+
+    &:active,
+    &.active {
+        outline: 0;
+        background-image: none;
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        cursor: not-allowed;
+        pointer-events: none; // Future-proof disabling of clicks
+        .opacity(.8);
+        box-shadow: none;
+    }
+}
+
+
+// Alternate buttons
+// --------------------------------------------------------------------------
+
+.btn--default {
+    .button-variant(@btn-default-color, @btn-default-bg);
+}
+
+.btn--success {
+    .button-variant(@btn-success-color, @btn-success-bg);
+}
+
+.btn--info {
+    .button-variant(@btn-info-color, @btn-info-bg);
+}
+
+.btn--warning {
+    .button-variant(@btn-warning-color, @btn-warning-bg);
+}
+
+.btn--error {
+    .button-variant(@btn-error-color, @btn-error-bg);
+}
+
+.btn--ghost {
+    .button-variant(@btn-ghost-color, @btn-ghost-bg, true);
+}
+
+
+// Link buttons
+//
+// Make a button look and behave like a link
+// --------------------------------------------------------------------------
+
+.btn--link {
+    font-weight: normal;
+    color: @link-color;
+    border-radius: 0;
+
+    &,
+    &:active,
+    &.active,
+    &[disabled],
+    fieldset[disabled] & {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: transparent;
+    }
+
+    &:hover,
+    &:focus {
+        color: @link-hover-color;
+        text-decoration: @link-hover-decoration;
+        background-color: transparent;
+    }
+
+    &[disabled],
+    fieldset[disabled] & {
+        &:hover,
+        &:focus {
+            color: @btn-link-disabled-color;
+            text-decoration: none;
+        }
+    }
+}
+
+
+// Button Sizes
+// --------------------------------------------------------------------------
+
+.btn--lg {
+    // line-height ensure even-numbered height of button next to large input
+    .button-size(@btn-padding-vertical + 4px, @btn-padding-horizontal + 10px, @font-size-large, @line-height-base);
+}
+
+.btn--sm {
+    // line-height ensure proper height of button next to small input
+    .button-size(@btn-padding-vertical - 1px, @btn-padding-horizontal - 6px, @font-size-small, @line-height-base);
+}
+
+.btn--xs {
+    .button-size(@btn-padding-vertical - 4px, @btn-padding-horizontal - 14px, @font-size-small, @line-height-base);
+}

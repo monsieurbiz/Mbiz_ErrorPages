@@ -10,7 +10,7 @@
 <?php endif; ?>
 <?php if ($this->showSendForm): ?>
     <ul class="messages">
-        <li class="note-msg">
+        <li class="info-msg">
             <ul>
                 <li>We are currently experiencing some technical issues. We apologize for the inconvenience and will contact you shortly to resolve the issue. To help us serve you please fill in the form below.</li>
             </ul>
@@ -25,32 +25,34 @@
             </li>
         </ul>
     <?php endif; ?>
-    <form id="form-validate" action="<?php echo '{$this->getBaseUrl(true)}errors/report.php?id={$this->reportId}'; ?>" method="post">
+    <form id="form-validate" class="contact" action="<?php echo '{$this->getBaseUrl(true)}errors/report.php?id={$this->reportId}'; ?>" method="post">
         <h2 class="form-title">Personal Information</h2>
-        <div class="form-group">
-            <label for="firstname" class="required">First Name <em>*</em></label>
-            <input type="text" name="firstname" id="firstname" value="<?php echo $this->postData['firstName']; ?>" class="form-control required-entry">
-        </div>
-        <div class="form-group">
-            <label for="lastname" class="required"><em>*</em>Last Name </label>
-            <input type="text" name="lastname" id="lastname" value="<?php echo $this->postData['lastName']; ?>" class="form-control required-entry">
-        </div>
-        <div class="form-group">
-            <label for="firstname" class="required"><em>*</em>Email Address</label>
-            <input type="text" name="email" id="email_address" value="<?php echo $this->postData['email']; ?>" class="form-control validate-email required-entry">
-        </div>
-        <div class="form-group">
-            <label for="firstname">Telephone</label>
-            <input type="text" name="telephone" id="telephone" value="<?php echo $this->postData['telephone']; ?>" class="form-control">
+        <div class="form-inner">
+            <div class="form-group">
+                <label for="firstname" class="required">First Name <em>*</em></label>
+                <input type="text" name="firstname" id="firstname" value="<?php echo $this->postData['firstName']; ?>" class="form-control required-entry">
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="required">Last Name <em>*</em></label>
+                <input type="text" name="lastname" id="lastname" value="<?php echo $this->postData['lastName']; ?>" class="form-control required-entry">
+            </div>
+            <div class="form-group">
+                <label for="firstname" class="required">Email Address <em>*</em></label>
+                <input type="text" name="email" id="email_address" value="<?php echo $this->postData['email']; ?>" class="form-control validate-email required-entry">
+            </div>
+            <div class="form-group">
+                <label for="firstname">Telephone</label>
+                <input type="text" name="telephone" id="telephone" value="<?php echo $this->postData['telephone']; ?>" class="form-control">
+            </div>
         </div>
         <div class="form-group">
             <label for="firstname">Comment</label>
-            <textarea name="comment" rows="5" class="form-control"><?php echo $this->postData['comment']; ?></textarea>
+            <textarea name="comment" rows="6" class="form-control"><?php echo $this->postData['comment']; ?></textarea>
         </div>
         <div class="form-submit">
-            <button name="submit" class="button" type="submit">Submit</button>
-            <span class="form-required">* Required Fields</span>
+            <button name="submit" class="btn btn--default" type="submit">Submit</button>
         </div>
+        <span class="form-required"><em>*</em> Required Fields</span>
     </form>
 <?php elseif ('' == $this->reportAction): ?>
     <p><em>Exception printing is disabled by default for security reasons.</em></p>

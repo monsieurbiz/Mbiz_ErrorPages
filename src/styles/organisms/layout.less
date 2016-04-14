@@ -1,3 +1,43 @@
 //
 // Layout
 // --------------------------------------------------------------------------
+
+body {
+    .clearfix();
+    padding-bottom: 80px;
+    background: @body-bg url('../images/background.png') left top repeat;
+}
+
+
+// Wrapper
+// --------------------------------------------------------------------------
+
+.wrapper {
+    margin: 15px 15px 0;
+    padding: 15px;
+    text-align: center;
+    background-color: @wrapper-bg;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, .4);
+    border-radius: 10px;
+
+    @media (min-width: @screen-sm-min) {
+        .middle();
+        width: 560px;
+        margin: 0;
+        padding: 40px;
+    }
+}
+
+
+// Content
+// --------------------------------------------------------------------------
+
+.content {
+    font-size: 1.3rem;
+    line-height: 1.4;
+
+    @media (min-width: @screen-sm-min) {
+        font-size: @font-size-base;
+        line-height: @line-height-base;
+    }
+}
