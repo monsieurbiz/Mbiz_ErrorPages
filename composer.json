@@ -1,0 +1,15 @@
+{
+    "name": "monsieurbiz/mbiz_errorpages",
+    "description": "Magento module which improve the default error pages in errors/.",
+    "type": "magento-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Guirec Lefort",
+            "email": "g.lefort@monsieurbiz.com"
+        }
+    ],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "Allows to manage this package as a dependency."
+    }
+}
